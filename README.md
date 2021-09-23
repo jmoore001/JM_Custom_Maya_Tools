@@ -10,7 +10,9 @@ To get this working, follow these steps:
 
 2 - Move the shelf file 'shelf_CustomJM.mel' to 'C:\Users\<user>\Documents\maya\<version>\prefs\shelves
 
-3 - (Optional) add your desired tools to your own shelf with cmd + mmb
+3 - Restart Maya
+
+4 - (Optional) add your desired tools to your own shelf with cmd + mmb
 
 All set
 
