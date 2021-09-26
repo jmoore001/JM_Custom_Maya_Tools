@@ -1,6 +1,8 @@
 import maya.cmds as cmds
 import maya.mel as mel
+
 class ApplySameUVs(object):
+
     def __init__(self):
         
         selectobject = cmds.ls(sl = True)

@@ -4,7 +4,7 @@ import maya.mel as mel
 class QCUI(object):
     
     def __init__(self):
-        print('this is a test')
+        
         def CloseWindow(*args):
             cmds.deleteUI('QCWindow', window = True)
         def CloseNotes(*args):
@@ -71,7 +71,7 @@ class QCUI(object):
         cmds.rowColumnLayout(p = parentLayout, numberOfColumns = 2, cs = [(1,10),(2,10)], rs = [(1,10),(2,10)], columnWidth = [(1, 180), (2, 10)] ) 
         cmds.separator(p = parentLayout, h = 10)
         cmds.button(p = parentLayout, label = 'Close', command = CloseWindow)
-        print("this is a test")
+        
         cmds.showWindow('QCWindow')    
 
 
