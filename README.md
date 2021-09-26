@@ -6,7 +6,7 @@ This set of tools currently only works on windows. Perhaps I'll make it compatib
 To get this working, follow these steps:
 
 
-1 - Add this repository to 'C:\Users\<user>\Documents\maya'
+1 - Add this repository to 'C:\Users\\<user>\Documents\maya'
 
 2 - Open the script editor in Maya and drag and drop the script called 'Setup.py' in the script editor. Run the script.
 
