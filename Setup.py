@@ -19,6 +19,4 @@ shelf = cmds.tabLayout(shelfLevel, query=1, ca=1, selectTab = True)
 
 cmds.shelfButton(p = shelf, image1 = icon, command = command)
 
-##### comment
-
 InitilizeTools.CustomToolsJM()
