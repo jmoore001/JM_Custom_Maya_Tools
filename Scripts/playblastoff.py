@@ -151,7 +151,7 @@ def blastoff(direct, filepref):
         cmds.text('Y Rotation')
         yslider = cmds.intSlider(min = 0, max = 360, dc = rcamy)
         cmds.rowColumnLayout(nc = 2, adjustableColumn = True)
-        cmds.button(l = 'Add to Kitbash', c = exportplayblast)
+        cmds.button(l = 'Add to Library', c = exportplayblast)
         cmds.button(l = 'Cancel', c = closewindows)
         cmds.showWindow()
             

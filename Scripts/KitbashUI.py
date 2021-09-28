@@ -7,7 +7,7 @@ class KitbashUI(object):
     
     def __init__(self):
         self.window = 'KitbashUI'
-        self.title = '3D Kitbash Extravoganza'
+        self.title = '3D Library'
         self.size = (650, 920)
         
         if cmds.window(self.window, exists = True):
@@ -23,7 +23,7 @@ class KitbashUI(object):
         self.window = cmds.window(self.window, title = self.title, widthHeight = self.size, s = False)
         
         parentlayout = cmds.rowColumnLayout(adjustableColumn = True)
-        cmds.text('Welcome to the kitbash!',h = 30, fn = 'boldLabelFont')
+        
         cmds.separator(h = 20)
         
         ########################################################################
@@ -94,11 +94,11 @@ class KitbashUI(object):
         
         cmds.rowColumnLayout(adjustableColumn = True, parent = parentlayout)
         def setdirwarning(*args):
-            cmds.warning('Must have directory set to add to kitbash libray.') 
+            cmds.warning('Must have directory set to add to Library.')
             
             
         ########################################################################
-        #add to kitbash function
+        #add to Library function
         ########################################################################
 
 
@@ -124,7 +124,7 @@ class KitbashUI(object):
                 for fi in filelist:
                     if fi == checkfile:
                         canprocede = False
-                        cmds.warning('Item with name \'' + userinput + '\' already exists in the kitbash.')
+                        cmds.warning('Item with name \'' + userinput + '\' already exists in the Library.')
                 if spacewarning == True:
                     cmds.warning('Do not include any spaces in name.')
                 if periodwarning == True:
@@ -144,10 +144,10 @@ class KitbashUI(object):
             
             
                 
-            cmds.window('namingwindow', title = 'Name Kitbash Item', w = 350, h = 100, s = False)
+            cmds.window('namingwindow', title = 'Name Item', w = 350, h = 100, s = False)
             
             parentlayout = cmds.rowColumnLayout(adjustableColumn = True)
-            cmds.text('Enter name of item to add to kitbash.', h = 30)
+            cmds.text('Enter name of item to add to Library.', h = 30)
             
             
             
@@ -158,7 +158,7 @@ class KitbashUI(object):
             
 
             cmds.separator(h = 20)
-            cmds.button(l = 'Add to Kitbash', c = initiateexport)
+            cmds.button(l = 'Add to Library', c = initiateexport)
             
            
             
@@ -172,7 +172,7 @@ class KitbashUI(object):
                     
                 
             
-        def addtokitbash(*args):
+        def addtoLibrary(*args):
             selectionlist = cmds.ls(sl = True)
             if len(selectionlist) > 0:   
                 namewindow()
@@ -269,14 +269,14 @@ class KitbashUI(object):
                         
                         
             
-            cmds.button(addtokitbashbutton, edit = True, c = addtokitbash)
+            cmds.button(addtokitbashbutton, edit = True, c = addtoLibrary)
             cmds.button(directorybutton, edit = True, l = filedirectory)
             
         
         
         
         searchbar = cmds.textField(tcc = partial(createbuttons, newdirectory, False))
-        addtokitbashbutton = cmds.button(l = 'Add to kitbash.', aop = True, c = setdirwarning) 
+        addtokitbashbutton = cmds.button(l = 'Add to Library.', aop = True, c = setdirwarning)
         if directq != 0 and directq != 'Set Directory' and directq != '0':
             
             createbuttons(directq, True)

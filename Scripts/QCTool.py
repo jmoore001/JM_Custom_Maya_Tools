@@ -58,19 +58,19 @@ class QCUI(object):
         cmds.separator(p = parentLayout, h = 10)
         buttonLayout = cmds.rowColumnLayout(p = parentLayout, numberOfColumns = 3, columnWidth = [(1, 90), (2, 90), (3, 10)] , cs = [(1,10),(2,20), (3, 1)], rs = [(1,10),(2,20),(3, 10)])
         
-        cmds.button(p = buttonLayout, label = 'Topology', c = partial(NoteWindow, 'Topology', 0.224359, 0.395, 0.21014))
-        cmds.button(p = buttonLayout, label = 'Geometry', c = partial(NoteWindow, 'Geometry', 0.21014, 0.238581, 0.395))
+        cmds.button(p = buttonLayout, label = 'Topology', bgc = (0.224359, 0.395, 0.21014), c = partial(NoteWindow, 'Topology', 0.224359, 0.395, 0.21014))
+        cmds.button(p = buttonLayout, label = 'Geometry', bgc = (0.21014, 0.238581, 0.395), c = partial(NoteWindow, 'Geometry', 0.21014, 0.238581, 0.395))
         cmds.text(' ')
-        cmds.button(p = buttonLayout, label = 'Form', c = partial(NoteWindow, 'Form', 0.395, 0.21014, 0.21014))
-        cmds.button(p = buttonLayout, label = 'UVs', c = partial(NoteWindow, 'UV', 0.395, 0.264498, 0.055695))
+        cmds.button(p = buttonLayout, label = 'Form',bgc = (0.395, 0.21014, 0.21014),  c = partial(NoteWindow, 'Form', 0.395, 0.21014, 0.21014))
+        cmds.button(p = buttonLayout, label = 'Artifact', bgc = (0.395, 0.264498, 0.055695), c = partial(NoteWindow, 'Artifact', 0.395, 0.264498, 0.055695))
         cmds.text(' ')
-        cmds.button(p = buttonLayout, label = 'Normals', c = partial(NoteWindow, 'Normal', 0.292227, 0.152075, 0.395))
-        cmds.button(p = buttonLayout, label = 'Other', c = partial(NoteWindow, 'Miscellaneous', 0.130515, 0.339, 0.314944))
+        cmds.button(p = buttonLayout, label = 'Normals', bgc = (0.292227, 0.152075, 0.395), c = partial(NoteWindow, 'Normal', 0.292227, 0.152075, 0.395))
+        cmds.button(p = buttonLayout, label = 'Other', bgc = (0.130515, 0.339, 0.314944), c = partial(NoteWindow, 'Miscellaneous', 0.130515, 0.339, 0.314944))
         cmds.text(' ')
         
         cmds.rowColumnLayout(p = parentLayout, numberOfColumns = 2, cs = [(1,10),(2,10)], rs = [(1,10),(2,10)], columnWidth = [(1, 180), (2, 10)] ) 
         cmds.separator(p = parentLayout, h = 10)
-        cmds.button(p = parentLayout, label = 'Close', command = CloseWindow)
+        cmds.button(p = parentLayout, label = 'Close', command = CloseWindow, bgc = (.1,.1,.1))
         
         cmds.showWindow('QCWindow')    
 
