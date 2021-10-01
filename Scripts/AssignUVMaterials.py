@@ -14,6 +14,7 @@ class ApplyUVsUI(object):
                     return returnFolder
                     
             return projectFile
+        global projectRoot
         projectRoot = FindProjectRoot()
         print('projectRoot is ' + projectRoot)
         albedoFile = 'None'
