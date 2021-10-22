@@ -100,6 +100,17 @@ class CustomToolsJM(object):
             else:
                 QCTool.QCUI()
 ##################################################################  
+    global CreateProject
+    def CreateProject(info, shelfvar, *args):
+        import CreateProject
+        if info:
+            return 'Create a maya project for use at Index AR Solutions.'
+        else:
+            if shelfvar:
+                AddingToShelf('CreateProject', 'CreateProject.CreateProject()')
+            else:
+                CreateProject.CreateProject()
+##################################################################  
     def __init__(self):
         global close
         global shelf

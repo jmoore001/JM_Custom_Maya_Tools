@@ -135,6 +135,7 @@ class ApplyUVsUI(object):
                     
                 def CreateGroupNames(Coords):
                     order = []
+                    
                     tileNumbers = []
                     
                     for list in Coords:
@@ -149,7 +150,7 @@ class ApplyUVsUI(object):
                             tileNumbers.append(entry)
                     
                     tileNumbers.sort()
-                    print(tileNumbers)
+                    
                     listItem = 0
                     for x in tileNumbers:
                         
