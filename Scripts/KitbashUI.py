@@ -136,7 +136,7 @@ class KitbashUI(object):
                 if canprocede == True:
                     if cmds.window('namingwindow', exists = True):
                         cmds.deleteUI('namingwindow', window = True)
-
+                    global newdirectory
                     blastoff(newdirectory, userinput)
                     
 
