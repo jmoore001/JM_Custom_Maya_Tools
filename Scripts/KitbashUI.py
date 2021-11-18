@@ -274,7 +274,7 @@ class KitbashUI(object):
             
         
         
-        
+        global newdirectory
         searchbar = cmds.textField(tcc = partial(createbuttons, newdirectory, False))
         addtokitbashbutton = cmds.button(l = 'Add to Library.', aop = True, c = setdirwarning)
         if directq != 0 and directq != 'Set Directory' and directq != '0':
