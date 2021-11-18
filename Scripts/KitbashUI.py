@@ -9,6 +9,7 @@ class KitbashUI(object):
         self.window = 'KitbashUI'
         self.title = '3D Library'
         self.size = (650, 920)
+        global newdirectory
         newdirectory = ''
         if cmds.window(self.window, exists = True):
             cmds.deleteUI(self.window, window = True)
