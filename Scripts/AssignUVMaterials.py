@@ -9,8 +9,8 @@ class ApplyUVsUI(object):
             projectFile = cmds.workspace(q = True, rd = True)
             folderList = cmds.getFileList(fld = projectFile)
             for folder in folderList:
-                if folder == 'sourceimages':
-                    returnFolder = cmds.workspace( q=True, rd=True ) + 'sourceimages'
+                if folder == 'textures':
+                    returnFolder = cmds.workspace( q=True, rd=True ) + 'textures'
                     return returnFolder
                     
             return projectFile
