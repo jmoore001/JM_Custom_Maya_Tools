@@ -30,6 +30,7 @@ class KitbashUI(object):
         ########################################################################
         #set directory function
         ########################################################################
+        global directq
         directq = cmds.optionVar(q = 'saveddirect')
         
         if directq != 0 and directq != 'Set Directory' and directq != '0':
@@ -45,7 +46,8 @@ class KitbashUI(object):
                 newdirect = directory.replace('[u\'', '')
                 global newdirectory
                 newdirectory = newdirect.replace('\']', '')
-                cmds.optionVar(sv = ('saveddirect', newdirectory))
+                global directq
+                directq = cmds.optionVar(sv = ('saveddirect', newdirectory))
                 createbuttons(newdirectory, True)
         
 
@@ -110,7 +112,7 @@ class KitbashUI(object):
 
                 userinput = str(cmds.textField(textfield, q = True, text = True))
                 
-                print(userinput)
+
                 canprocede = True
                 periodwarning = False
                 spacewarning = False
@@ -187,7 +189,8 @@ class KitbashUI(object):
         
         objbuttons = []       
         def createbuttons(filedirectory, listall, *args):
-            
+            if filedirectory == 0 or filedirectory == 'Set Directory' or filedirectory == '0':
+                return
             for buttons in objbuttons:
                 
                 cmds.deleteUI(buttons, control = True)
@@ -197,6 +200,7 @@ class KitbashUI(object):
             del objbuttons[:]
             
             global filelist
+            global newdirectory
             filelist = cmds.getFileList(fld = filedirectory)
             if listall == True:
                 filedisplaylist = filelist
@@ -273,11 +277,13 @@ class KitbashUI(object):
             cmds.button(addtokitbashbutton, edit = True, c = addtoLibrary)
             cmds.button(directorybutton, edit = True, l = filedirectory)
             
-        
+        def sendtosearch(*args):
+            createbuttons(cmds.button(directorybutton, q = True, l = True), False)
         
         global newdirectory
-        searchbar = cmds.textField(tcc = partial(createbuttons, newdirectory, False))
+        searchbar = cmds.textField(tcc = sendtosearch)
         addtokitbashbutton = cmds.button(l = 'Add to Library.', aop = True, c = setdirwarning)
+        global directq
         if directq != 0 and directq != 'Set Directory' and directq != '0':
             
             createbuttons(directq, True)
