@@ -1,12 +1,17 @@
 import maya.cmds as cmds
 import os
 import sys
-
 user = os.environ.get('USER')
 path = 'C:/Users/' + user + '/Documents/maya/JM_Custom_Maya_Tools/Scripts'
 if path not in sys.path:
     sys.path.append(path)
 import InitilizeTools
+import JMCustomMarkingMenu
+version = cmds.about(version = True)
+
+destWindows = 'C:/Users/' + user + '/Documents/maya/' + version + '/scripts/userSetup.mel'
+srcWindows = path + '/userSetup.mel'
+cmds.sysFile( srcWindows, copy=destWindows )
 customToolsDirect = 'C:/Users/{}/Documents/maya/JM_Custom_Maya_Tools'.format(user)
     
 scriptsFolder = customToolsDirect + '/Scripts'
@@ -18,5 +23,5 @@ command = "import os\nimport sys\nuser = os.environ.get('USER')\npath = 'C:/User
 shelf = cmds.tabLayout(shelfLevel, query=1, ca=1, selectTab = True)
 
 cmds.shelfButton(p = shelf, image1 = icon, command = command)
-
+JMCustomMarkingMenu.JMCustomToolsMarkingMenu()
 InitilizeTools.CustomToolsJM()

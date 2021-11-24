@@ -1,5 +1,14 @@
 import maya.cmds as cmds
 import maya.mel as mel
+import os
+import sys
+user = os.environ.get('USER')
+path = 'C:/Users/' + user + '/Documents/maya/JM_Custom_Maya_Tools/Scripts'
+if path not in sys.path:
+    sys.path.append(path)
+import Edits
+Edits.Edits()
+
 
 class ApplySameUVs(object):
 

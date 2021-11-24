@@ -1,12 +1,15 @@
 import os
 import sys
 import maya.mel as mel
+from functools import partial
+import maya.cmds as cmds
 user = os.environ.get('USER')
 path = 'C:/Users/{}/Documents/maya/JM_Custom_Maya_Tools/Scripts'.format(user)
 if path not in sys.path:
     sys.path.append(path)
-from functools import partial
-import maya.cmds as cmds
+import Edits
+Edits.Edits()
+
 
 
 class CustomToolsJM(object):
@@ -124,7 +127,7 @@ class CustomToolsJM(object):
         shelf = False
         self.window = 'JMTools'
         self.title = 'Custom Tools'
-        self.size = (250,290)
+        self.size = (250,320)
         
         
         def AddShelf(*args):
