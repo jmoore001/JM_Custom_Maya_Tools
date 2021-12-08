@@ -17,8 +17,7 @@ class KitbashUI(object):
         self.window = 'KitbashUI'
         self.title = '3D Library'
         self.size = (650, 920)
-        global newdirectory
-        newdirectory = ''
+        self.newdirectory = ''
         if cmds.window(self.window, exists = True):
             cmds.deleteUI(self.window, window = True)
         if cmds.window('namingwindow', exists = True):
@@ -38,25 +37,29 @@ class KitbashUI(object):
         ########################################################################
         #set directory function
         ########################################################################
-        global directq
-        directq = cmds.optionVar(q = 'saveddirect')
         
-        if directq != 0 and directq != 'Set Directory' and directq != '0':
-            global newdirectory
-            newdirectory = directq
+        self.directq = cmds.optionVar(q = 'saveddirect')
+        if self.directq != 0 and self.directq != 'Set Directory' and self.directq != '0':
+            
+            self.newdirectory = self.directq
         directory = ''
+        def SendDirect(self):
+            setdirectory()
         def setdirectory(*args):
             
             
             directory = str(cmds.fileDialog2(fm = 3, ds = 2))
             if directory != 'None':
                
-                newdirect = directory.replace('[u\'', '')
-                global newdirectory
-                newdirectory = newdirect.replace('\']', '')
-                global directq
-                directq = cmds.optionVar(sv = ('saveddirect', newdirectory))
-                createbuttons(newdirectory, True)
+                newdirect = directory.replace('[u\'', '')[2:]
+                
+               
+                self.newdirectory = newdirect.replace('\']', '')
+                
+                self.directq = cmds.optionVar(sv = ('saveddirect', self.newdirectory))
+                print(self.newdirectory)
+                cmds.button(directorybutton, edit = True, l = self.newdirectory)
+                createbuttons(self.newdirectory, True)
         
 
         
@@ -91,7 +94,7 @@ class KitbashUI(object):
         
         
         
-        directorybutton = cmds.button(l = 'Set Directory', aop = True, c = setdirectory)
+        directorybutton = cmds.button(l = 'Set Directory', aop = True, c = SendDirect)
         
         
         cmds.text('')
@@ -147,8 +150,8 @@ class KitbashUI(object):
                 if canprocede == True:
                     if cmds.window('namingwindow', exists = True):
                         cmds.deleteUI('namingwindow', window = True)
-                    global newdirectory
-                    blastoff(newdirectory, userinput)
+                 
+                    blastoff(self.newdirectory, userinput)
                     
 
                     
@@ -208,7 +211,7 @@ class KitbashUI(object):
             del objbuttons[:]
             
             global filelist
-            global newdirectory
+            
             filelist = cmds.getFileList(fld = filedirectory)
             if listall == True:
                 filedisplaylist = filelist
@@ -288,13 +291,14 @@ class KitbashUI(object):
         def sendtosearch(*args):
             createbuttons(cmds.button(directorybutton, q = True, l = True), False)
         
-        global newdirectory
+        
         searchbar = cmds.textField(tcc = sendtosearch)
         addtokitbashbutton = cmds.button(l = 'Add to Library.', aop = True, c = setdirwarning)
-        global directq
-        if directq != 0 and directq != 'Set Directory' and directq != '0':
+        if self.directq != 0 and self.directq != 'Set Directory' and self.directq != '0':
             
-            createbuttons(directq, True)
+            
+
+            createbuttons(self.directq, True)
         
 
         

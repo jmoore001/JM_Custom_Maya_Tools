@@ -115,25 +115,23 @@ class CustomToolsJM(object):
                 CreateProject.CreateProject()
 ##################################################################  
     def __init__(self):
-        global close
-        global shelf
+        self.close =  True
+        self.shelf = False
         backgroundColor = [.25,.25,.25]
         shelfBackgroundColor = [.2, .3, .1]
         
         buttonRGB = [.3, .3, .3]
         closeButtonRGB = [.2, .4, .5]
         shelfButtonRGB = [.4, .5, .8]
-        close = True
-        shelf = False
+        
         self.window = 'JMTools'
         self.title = 'Custom Tools'
         self.size = (250,320)
         
         
         def AddShelf(*args):
-            global shelf
             
-            if shelf:
+            if self.shelf:
                 cmds.text(topText, l =  'Double click for info.', edit = True)
                 cmds.scrollLayout(scrollParent, edit = True, bgc = backgroundColor)
                 cmds.button(shelfButton, edit = True, l = 'Add Tools To Shelf (OFF)', bgc = buttonRGB)
@@ -141,16 +139,15 @@ class CustomToolsJM(object):
                 cmds.text(topText, l = 'Add tools to shelf.', edit = True)
                 cmds.scrollLayout(scrollParent, edit = True, bgc = shelfBackgroundColor)
                 cmds.button(shelfButton, edit = True, l = 'Add Tools To Shelf (ON)', bgc = shelfButtonRGB)
-            shelf = not shelf
+            self.shelf = not self.shelf
         def CloseOnCommand(*args):
-            global close
             
-            if close:
+            if self.close:
                 
                 cmds.button(closeOnCommand, edit = True, l = 'Close On Command (OFF)', bgc = buttonRGB)
             else:
                 cmds.button(closeOnCommand, edit = True, l = 'Close On Command (ON)', bgc = closeButtonRGB)
-            close = not close
+            self.close = not self.close
             
         def InfoWindow(action, *args):
             command = action + '(True, False)'
@@ -169,12 +166,9 @@ class CustomToolsJM(object):
             cmds.showWindow(infoWindowName)
             cmds.window(infoWindowName, edit = True, widthHeight =  size, s = False)
         def DoAction(action, *args):
-            global close
-            global shelf
-            if close and not shelf:
+            if self.close and not self.shelf:
                 CloseUI(self.window)
-            global shelf
-            command = action + '(False, {})'.format(shelf)
+            command = action + '(False, {})'.format(self.shelf)
             
             result = eval(command)
         
