@@ -88,7 +88,7 @@ class CreateProject(object):
             directory = cmds.fileDialog2(ds = 2,fm = 2, cap = 'Choose Directory For Project', okc = 'Set')
             if directory == None:
                 return
-            cleanDirect = str(directory)[3:-2]
+            cleanDirect = str(directory)[2:-2]
             
             cmds.button(directButton, edit = True, l = cleanDirect)
         
