@@ -1,1 +1,2 @@
-JM_Custom_Maya_Tools/**/**/*.pyc
+/Scripts/*.pyc
+/Scripts/__pycache__/*.pyc
