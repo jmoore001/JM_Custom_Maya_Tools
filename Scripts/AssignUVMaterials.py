@@ -25,16 +25,14 @@ class ApplyUVsUI(object):
             return projectFile
         global projectRoot
         projectRoot = FindProjectRoot()
-        print('projectRoot is ' + projectRoot)
+        
         albedoFile = 'None'
         albedoList = []
         metalicFile = 'None'
         metalicList = []
         normalFile = 'None'
         normalList = []
-        print('albedo list ' + str(albedoList))
-        print('normal list ' + str(metalicList))
-        print('metalic list ' + str(normalList))
+        
         tempList = []
         def CloseWindow(*args):
             cmds.deleteUI('GroupNameWindow', window = True)
@@ -44,11 +42,10 @@ class ApplyUVsUI(object):
             def ChooseFileAlbedo(*args):
                 global projectRoot
                 chosenFile = cmds.fileDialog2(ff = '*.png', dir = projectRoot, fm = 1)
-            
-                cleanFile = str(chosenFile)[3:-2]
+                cleanFile = str(chosenFile)[2:-2]
                 direct = os.path.dirname(cleanFile)
                 
-                fileText = str(chosenFile).replace(str(direct), '')[4:-2]
+                fileText = str(chosenFile).replace(str(direct), '')[3:-2]
                 
                 
                 albedoFile = cleanFile
@@ -71,10 +68,9 @@ class ApplyUVsUI(object):
             def ChooseFileMetalic(*args):
                 global projectRoot   
                 chosenFile = cmds.fileDialog2(ff = '*.png', dir = projectRoot, fm = 1)
-            
-                cleanFile = str(chosenFile)[3:-2]
+                cleanFile = str(chosenFile)[2:-2]
                 direct = os.path.dirname(cleanFile)
-                fileText = str(chosenFile).replace(str(direct), '')[4:-2]
+                fileText = str(chosenFile).replace(str(direct), '')[3:-2]
             
                 
                 metalicFile = cleanFile
@@ -97,9 +93,9 @@ class ApplyUVsUI(object):
                 global projectRoot    
                 chosenFile = cmds.fileDialog2(ff = '*.png', dir = projectRoot, fm = 1)
             
-                cleanFile = str(chosenFile)[3:-2]
+                cleanFile = str(chosenFile)[2:-2]
                 direct = os.path.dirname(cleanFile)
-                fileText = str(chosenFile).replace(str(direct), '')[4:-2]
+                fileText = str(chosenFile).replace(str(direct), '')[3:-2]
             
                 
                 normalFile = cleanFile
@@ -211,7 +207,7 @@ class ApplyUVsUI(object):
                         
                         
                         
-                        print(matToAssign)
+                        
                         materials = cmds.ls(mat = True)
                         for mat in materials:
                             if matToAssign in mat:
@@ -249,8 +245,10 @@ class ApplyUVsUI(object):
                     
                     
                 
-               
-            window = cmds.window('AssignUVMaterials', title = 'Choose Material Files', w = 500, h = 300, s = True)
+            width = 500
+            height = 250   
+            window = cmds.window('AssignUVMaterials', title = 'Choose Material Files', w = width, h = height, s = True)
+            cmds.window('AssignUVMaterials', edit = True, w = width, h = height)
             parentlayout = cmds.rowColumnLayout(adjustableColumn = True)
             albedoText = cmds.text('Albedo')
             albedoButton = cmds.button('Choose Albedo', c = ChooseFileAlbedo)
@@ -274,4 +272,3 @@ class ApplyUVsUI(object):
         else:
             cmds.warning('Must have at least one object selected.')
             
-ApplyUVsUI()
