@@ -1,3 +1,4 @@
+from distutils import filelist
 import maya.cmds as cmds
 import pymel.core as pm
 import maya.mel as mel
@@ -25,14 +26,16 @@ class ApplyUVsUI(object):
             return projectFile
         global projectRoot
         projectRoot = FindProjectRoot()
-        
+        print('projectRoot is ' + projectRoot)
         albedoFile = 'None'
         albedoList = []
         metalicFile = 'None'
         metalicList = []
         normalFile = 'None'
         normalList = []
-        
+        print('albedo list ' + str(albedoList))
+        print('normal list ' + str(metalicList))
+        print('metalic list ' + str(normalList))
         tempList = []
         def CloseWindow(*args):
             cmds.deleteUI('GroupNameWindow', window = True)
@@ -42,10 +45,10 @@ class ApplyUVsUI(object):
             def ChooseFileAlbedo(*args):
                 global projectRoot
                 chosenFile = cmds.fileDialog2(ff = '*.png', dir = projectRoot, fm = 1)
+                
                 cleanFile = str(chosenFile)[2:-2]
                 direct = os.path.dirname(cleanFile)
-                
-                fileText = str(chosenFile).replace(str(direct), '')[3:-2]
+                fileText = str(chosenFile).replace(str(direct), '')[4:-2]
                 
                 
                 albedoFile = cleanFile
@@ -68,15 +71,16 @@ class ApplyUVsUI(object):
             def ChooseFileMetalic(*args):
                 global projectRoot   
                 chosenFile = cmds.fileDialog2(ff = '*.png', dir = projectRoot, fm = 1)
+            
                 cleanFile = str(chosenFile)[2:-2]
                 direct = os.path.dirname(cleanFile)
-                fileText = str(chosenFile).replace(str(direct), '')[3:-2]
+                fileText = str(chosenFile).replace(str(direct), '')[4:-2]
             
                 
                 metalicFile = cleanFile
                 
                 directory = metalicFile.replace(fileText, '')
-                fileList = cmds.getFileList(fld = directory)
+                fileList = cmds.getFileList(fld = direct)
                 del tempList[:]
                 del metalicList[:]
                 for f in fileList:
@@ -95,13 +99,13 @@ class ApplyUVsUI(object):
             
                 cleanFile = str(chosenFile)[2:-2]
                 direct = os.path.dirname(cleanFile)
-                fileText = str(chosenFile).replace(str(direct), '')[3:-2]
+                fileText = str(chosenFile).replace(str(direct), '')[4:-2]
             
                 
                 normalFile = cleanFile
                 
                 directory = normalFile.replace(fileText, '')
-                fileList = cmds.getFileList(fld = directory)
+                fileList = cmds.getFileList(fld = direct)
                 del normalList[:]
                 del tempList[:]
                 for f in fileList:
@@ -207,7 +211,7 @@ class ApplyUVsUI(object):
                         
                         
                         
-                        
+                        print(matToAssign)
                         materials = cmds.ls(mat = True)
                         for mat in materials:
                             if matToAssign in mat:
@@ -245,10 +249,8 @@ class ApplyUVsUI(object):
                     
                     
                 
-            width = 500
-            height = 250   
-            window = cmds.window('AssignUVMaterials', title = 'Choose Material Files', w = width, h = height, s = True)
-            cmds.window('AssignUVMaterials', edit = True, w = width, h = height)
+               
+            window = cmds.window('AssignUVMaterials', title = 'Choose Material Files', w = 500, h = 300, s = True)
             parentlayout = cmds.rowColumnLayout(adjustableColumn = True)
             albedoText = cmds.text('Albedo')
             albedoButton = cmds.button('Choose Albedo', c = ChooseFileAlbedo)
@@ -272,3 +274,4 @@ class ApplyUVsUI(object):
         else:
             cmds.warning('Must have at least one object selected.')
             
+ApplyUVsUI()
