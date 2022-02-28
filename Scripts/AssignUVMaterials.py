@@ -1,3 +1,4 @@
+from distutils import filelist
 import maya.cmds as cmds
 import pymel.core as pm
 import maya.mel as mel
@@ -44,10 +45,9 @@ class ApplyUVsUI(object):
             def ChooseFileAlbedo(*args):
                 global projectRoot
                 chosenFile = cmds.fileDialog2(ff = '*.png', dir = projectRoot, fm = 1)
-            
-                cleanFile = str(chosenFile)[3:-2]
-                direct = os.path.dirname(cleanFile)
                 
+                cleanFile = str(chosenFile)[2:-2]
+                direct = os.path.dirname(cleanFile)
                 fileText = str(chosenFile).replace(str(direct), '')[4:-2]
                 
                 
@@ -72,7 +72,7 @@ class ApplyUVsUI(object):
                 global projectRoot   
                 chosenFile = cmds.fileDialog2(ff = '*.png', dir = projectRoot, fm = 1)
             
-                cleanFile = str(chosenFile)[3:-2]
+                cleanFile = str(chosenFile)[2:-2]
                 direct = os.path.dirname(cleanFile)
                 fileText = str(chosenFile).replace(str(direct), '')[4:-2]
             
@@ -80,7 +80,7 @@ class ApplyUVsUI(object):
                 metalicFile = cleanFile
                 
                 directory = metalicFile.replace(fileText, '')
-                fileList = cmds.getFileList(fld = directory)
+                fileList = cmds.getFileList(fld = direct)
                 del tempList[:]
                 del metalicList[:]
                 for f in fileList:
@@ -97,7 +97,7 @@ class ApplyUVsUI(object):
                 global projectRoot    
                 chosenFile = cmds.fileDialog2(ff = '*.png', dir = projectRoot, fm = 1)
             
-                cleanFile = str(chosenFile)[3:-2]
+                cleanFile = str(chosenFile)[2:-2]
                 direct = os.path.dirname(cleanFile)
                 fileText = str(chosenFile).replace(str(direct), '')[4:-2]
             
@@ -105,7 +105,7 @@ class ApplyUVsUI(object):
                 normalFile = cleanFile
                 
                 directory = normalFile.replace(fileText, '')
-                fileList = cmds.getFileList(fld = directory)
+                fileList = cmds.getFileList(fld = direct)
                 del normalList[:]
                 del tempList[:]
                 for f in fileList:
