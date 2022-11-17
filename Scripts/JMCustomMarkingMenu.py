@@ -48,15 +48,18 @@ class JMCustomToolsMarkingMenu(object):
         def GroupUVsCommand(*args):
             import GroupUV
             GroupUV.GroupByUVs()
-        def QCToolCommand(*args):
-            import QCTool
-            QCTool.QCUI()
+        def LayoutUVsCommannd(*args):
+            import LayoutUVs
+            LayoutUVs.LayoutUVs()
         def CreateProjectCommand(*args):
             import CreateProject
             CreateProject.CreateProject()
         def ToolKitCommand(*args):
             import InitilizeTools
             InitilizeTools.CustomToolsJM()
+        def QCToolCommand(*args):
+            import QCTool
+            QCTool.QCUI()
         
 
         cmds.menuItem(p=menu, l="Library", rp="S", i=iconFolder + '/KitbashUI.png',c = LibraryCommand)
@@ -64,8 +67,9 @@ class JMCustomToolsMarkingMenu(object):
         cmds.menuItem(p=menu, l="Apply Same UVs", rp="E", i=iconFolder + '/applysameUVs.png',c = ApplyUVsCommand)
         cmds.menuItem(p=menu, l="Curves To Geometry", rp="SE", i=iconFolder + '/curvestopoly.png',c = CurvesToPolyCommand)
         cmds.menuItem(p=menu, l="Group By UVs", rp="SW", i=iconFolder + '/GroupUV.png',c = GroupUVsCommand)
-        cmds.menuItem(p=menu, l="Quality Control", rp="NW", i=iconFolder + '/QCTool.png',c = QCToolCommand)
+        cmds.menuItem(p=menu, l="Layout UVs", rp="NW", i=iconFolder + '/LayoutUVs.png',c = LayoutUVsCommannd)
         cmds.menuItem(p=menu, l="Create Project", rp="NE", i=iconFolder + '/CreateProject.png',c = CreateProjectCommand)
         cmds.menuItem(p=menu, l="Tool Kit", rp="N", i=iconFolder + '/CustomToolsIcon.png',c = ToolKitCommand)
+        cmds.menuItem(p=menu, l="Quality Control", i=iconFolder + '/QCTool.png',c = QCToolCommand)
     
 JMCustomToolsMarkingMenu()
