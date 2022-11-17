@@ -48,7 +48,7 @@ class ApplyUVsUI(object):
                 
                 cleanFile = str(chosenFile)[2:-2]
                 direct = os.path.dirname(cleanFile)
-                fileText = str(chosenFile).replace(str(direct), '')[4:-2]
+                fileText = str(chosenFile).replace(str(direct), '')[3:-2]
                 
                 
                 albedoFile = cleanFile
@@ -74,7 +74,7 @@ class ApplyUVsUI(object):
             
                 cleanFile = str(chosenFile)[2:-2]
                 direct = os.path.dirname(cleanFile)
-                fileText = str(chosenFile).replace(str(direct), '')[4:-2]
+                fileText = str(chosenFile).replace(str(direct), '')[3:-2]
             
                 
                 metalicFile = cleanFile
@@ -99,7 +99,7 @@ class ApplyUVsUI(object):
             
                 cleanFile = str(chosenFile)[2:-2]
                 direct = os.path.dirname(cleanFile)
-                fileText = str(chosenFile).replace(str(direct), '')[4:-2]
+                fileText = str(chosenFile).replace(str(direct), '')[3:-2]
             
                 
                 normalFile = cleanFile
