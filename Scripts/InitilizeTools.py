@@ -113,7 +113,18 @@ class CustomToolsJM(object):
                 AddingToShelf('CreateProject', 'CreateProject.CreateProject()')
             else:
                 CreateProject.CreateProject()
-##################################################################  
+################################################################## 
+    global LayoutUVs
+    def LayoutUVs(info, shelfvar, *args):
+        import LayoutUVs
+        if info:
+            return 'Unfold, orient, and layouut UVs. If in edit mode, the tool will cut all selected edges first then it will unfold, orient, and layout the UV shells.'
+        else:
+            if shelfvar:
+                AddingToShelf('LayoutUVs', 'LayoutUVs.LayoutUVs()')
+            else:
+                LayoutUVs.LayoutUVs()
+################################################################## 
     def __init__(self):
         self.close =  True
         self.shelf = False
