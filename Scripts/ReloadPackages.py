@@ -1,5 +1,11 @@
 import sys
 import os
+
+
+# this class is used to reload all the packages in maya because once maya imports it, it doesn't respond to changes made
+# to the files. Use this while editing any scripts by making a reference to this class in the script you're editing and 
+# call unload packages function before the import statement. If you need to, you can use self.DEFAULT_RELOAD_PACKAGES to
+#unload all the packages in this toolkit
 class ReloadPackages(object):
     def __init__(self):
         
@@ -42,4 +48,4 @@ class ReloadPackages(object):
                             print("Unloaded: %s" % i)
             except:
                 print("Failed to unload: %s" % i)
-            
+    
