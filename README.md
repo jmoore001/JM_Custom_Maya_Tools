@@ -14,4 +14,7 @@ To get this working, follow these steps:
 You're all set. You should now have an icon in your shelf that runs the main hub for all the custom tools. You can add any tools to your shelf by turning on the add to shelf option.
 
 
+
+To access the marking menu, hold crtl + alt and right click
+
 Enjoy!
