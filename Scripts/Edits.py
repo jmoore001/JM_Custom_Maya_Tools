@@ -13,7 +13,11 @@ class Edits():
     version = cmds.about(version = True)
 
     destWindows = 'C:/Users/' + user + '/Documents/maya/' + version + '/scripts/userSetup.mel'
-    srcWindows = path + '/userSetup.mel'
-    cmds.sysFile( srcWindows, copy=destWindows )
-        
+    if os.path.exists(destWindows):
+        print("skipping the creation of usersetup.mel")
+    else:
+        srcWindows = path + '/userSetup.mel'
+        cmds.sysFile( srcWindows, copy=destWindows )
+        customToolsDirect = 'C:/Users/{}/Documents/maya/JM_Custom_Maya_Tools'.format(user)
+
 Edits()

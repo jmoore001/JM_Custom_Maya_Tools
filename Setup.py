@@ -8,12 +8,14 @@ if path not in sys.path:
 import InitilizeTools
 import JMCustomMarkingMenu
 version = cmds.about(version = True)
-
 destWindows = 'C:/Users/' + user + '/Documents/maya/' + version + '/scripts/userSetup.mel'
-srcWindows = path + '/userSetup.mel'
-cmds.sysFile( srcWindows, copy=destWindows )
-customToolsDirect = 'C:/Users/{}/Documents/maya/JM_Custom_Maya_Tools'.format(user)
-    
+if os.path.exists(destWindows):
+    cmds.warning("userSetup.mel alread exists, this is being skipped, it is not a problem")
+else:
+    srcWindows = path + '/userSetup.mel'
+    cmds.sysFile( srcWindows, copy=destWindows )
+    customToolsDirect = 'C:/Users/{}/Documents/maya/JM_Custom_Maya_Tools'.format(user)
+
 scriptsFolder = customToolsDirect + '/Scripts'
 iconsFolder = customToolsDirect + '/Icons'
 
