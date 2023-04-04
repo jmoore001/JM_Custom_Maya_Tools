@@ -14,7 +14,7 @@ if os.path.exists(destWindows):
 else:
     srcWindows = path + '/userSetup.mel'
     cmds.sysFile( srcWindows, copy=destWindows )
-    customToolsDirect = 'C:/Users/{}/Documents/maya/JM_Custom_Maya_Tools'.format(user)
+customToolsDirect = 'C:/Users/{}/Documents/maya/JM_Custom_Maya_Tools'.format(user)
 
 scriptsFolder = customToolsDirect + '/Scripts'
 iconsFolder = customToolsDirect + '/Icons'
