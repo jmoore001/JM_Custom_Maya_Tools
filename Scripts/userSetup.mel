@@ -1,4 +1,7 @@
 
-string $pythonCommand = "import os\nimport sys\nuser = os.environ.get('USER')\npath = 'C:/Users/{}/Documents/maya/JM_Custom_Maya_Tools/Scripts'.format(user)\nif path not in sys.path:\n    sys.path.append(path)\nimport JMCustomMarkingMenu\nJMCustomMarkingMenu.JMCustomToolsMarkingMenu()";
+string $pythonCommand = "import maya.cmds as cmds\nimport os\nimport sys\nuser = os.environ.get('USER')\nscriptsFolder = cmds.optionVar(q = 'JMDirectory') + '/Scripts'\nif scriptsFolder not in sys.path:\n    sys.path.append(scriptsFolder)\nimport JMCustomMarkingMenu\nJMCustomMarkingMenu.JMCustomToolsMarkingMenu()";
 python($pythonCommand);
+
+
+
 

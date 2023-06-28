@@ -3,10 +3,10 @@ import os
 import sys
 
 
-user = os.environ.get('USER')
-path = 'C:/Users/{}/Documents/maya/JM_Custom_Maya_Tools/Scripts'.format(user)
-if path not in sys.path:
-    sys.path.append(path)
+scriptsFolder = cmds.optionVar(q = "JMDirectory") + "/Scripts"
+
+if scriptsFolder not in sys.path:
+    sys.path.append(scriptsFolder)
 
 class JMCustomToolsMarkingMenu(object):
 
@@ -26,12 +26,18 @@ class JMCustomToolsMarkingMenu(object):
     def BuildMarkingMenu(self, menu, parent):
 
 
-        user = os.environ.get('USER')
-        path = 'C:/Users/{}/Documents/maya/JM_Custom_Maya_Tools/Scripts'.format(user)
-        if path not in sys.path:
-            sys.path.append(path)
+        usd = cmds.internalVar(usd=True)
+        version = cmds.about(version=True)
+        dirWithoutVersion = usd.replace(str(version)+ "/", "")
+        mayaDirectory = dirWithoutVersion.replace("/scripts/", "")
+        path = mayaDirectory + "/JM_Custom_Maya_Tools"
+        scriptsFolder = path + '/Scripts'
+        var = cmds.optionVar(sv =("JMDirectory", path))
+
+        if scriptsFolder not in sys.path:
+            sys.path.append(scriptsFolder)
         
-        iconFolder = 'C:/Users/{}/Documents/maya/JM_Custom_Maya_Tools/Icons'.format(user)
+        iconFolder = mayaDirectory + "/JM_Custom_Maya_Tools/Icons"
 
         def LibraryCommand(*args):
             import KitbashUI

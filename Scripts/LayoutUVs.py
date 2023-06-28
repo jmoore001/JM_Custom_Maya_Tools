@@ -1,6 +1,10 @@
 import maya.cmds as cmds
 import maya.mel as mel
+import sys
+scriptsFolder = cmds.optionVar(q = "JMDirectory") + "/Scripts"
 
+if scriptsFolder not in sys.path:
+    sys.path.append(scriptsFolder)
 
 import Edits
 

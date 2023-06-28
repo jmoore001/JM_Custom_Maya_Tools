@@ -3,10 +3,10 @@ import sys
 import maya.mel as mel
 from functools import partial
 import maya.cmds as cmds
-user = os.environ.get('USER')
-path = 'C:/Users/{}/Documents/maya/JM_Custom_Maya_Tools/Scripts'.format(user)
-if path not in sys.path:
-    sys.path.append(path)
+scriptsFolder = cmds.optionVar(q = "JMDirectory") + "/Scripts"
+
+if scriptsFolder not in sys.path:
+    sys.path.append(scriptsFolder)
 import Edits
 Edits.Edits()
 
@@ -16,7 +16,7 @@ class CustomToolsJM(object):
     global customToolsDirect
     global scriptsFolder
     global iconsFolder
-    customToolsDirect = 'C:/Users/{}/Documents/maya/JM_Custom_Maya_Tools'.format(user)
+    customToolsDirect = cmds.optionVar(q = "JMDirectory")
         
     scriptsFolder = customToolsDirect + '/Scripts'
     iconsFolder = customToolsDirect + '/Icons'
@@ -27,7 +27,7 @@ class CustomToolsJM(object):
     global AddingToShelf
     def AddingToShelf(moduleName, call, *args):
         global iconsFolder
-        command = "import os\nimport sys\nuser = os.environ.get('USER')\npath = 'C:/Users/' + user + '/Documents/maya/JM_Custom_Maya_Tools/Scripts'\nif path not in sys.path:\n    sys.path.append(path)\nimport {0}\n{1}".format(moduleName, call)
+        command = "import os\nimport sys\nuser = os.environ.get('USER')\nscriptsFolder = cmds.optionVar(q = 'JMDirectory') + '/Scripts'\nif scriptsFolder not in sys.path:\n    sys.path.append(nscriptsFolder)\nimport {0}\n{1}".format(moduleName, call)
         icon = iconsFolder + '/' + moduleName + '.png'
         shelfLevel = mel.eval("$tmpVar=$gShelfTopLevel")
 

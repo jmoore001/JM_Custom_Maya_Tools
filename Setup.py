@@ -1,27 +1,34 @@
 import maya.cmds as cmds
 import os
 import sys
-user = os.environ.get('USER')
-path = 'C:/Users/' + user + '/Documents/maya/JM_Custom_Maya_Tools/Scripts'
-if path not in sys.path:
-    sys.path.append(path)
+usd = cmds.internalVar(usd=True)
+version = cmds.about(version=True)
+dirWithoutVersion = usd.replace(str(version)+ "/", "")
+mayaDirectory = dirWithoutVersion.replace("/scripts/", "")
+path = mayaDirectory + "/JM_Custom_Maya_Tools"
+scriptsFolder = path + '/Scripts'
+var = cmds.optionVar(sv =("JMDirectory", path))
+
+if scriptsFolder not in sys.path:
+    sys.path.append(scriptsFolder)
 import InitilizeTools
 import JMCustomMarkingMenu
-version = cmds.about(version = True)
-destWindows = 'C:/Users/' + user + '/Documents/maya/' + version + '/scripts/userSetup.mel'
+srcWindows = path + '/Scripts/userSetup.mel'
+destWindows = mayaDirectory + "/" +  version + '/scripts/userSetup.mel'
+print(destWindows)
 if os.path.exists(destWindows):
-    cmds.warning("userSetup.mel alread exists, this is being skipped, it is not a problem")
+    cmds.warning("userSetup.mel alread exists, this is being skipped, you will need to make sure that " + destWindows + " contains the the lines of code inside of " + srcWindows)
 else:
-    srcWindows = path + '/userSetup.mel'
+    
     cmds.sysFile( srcWindows, copy=destWindows )
-customToolsDirect = 'C:/Users/{}/Documents/maya/JM_Custom_Maya_Tools'.format(user)
 
-scriptsFolder = customToolsDirect + '/Scripts'
-iconsFolder = customToolsDirect + '/Icons'
+
+
+iconsFolder = path + '/Icons'
 
 shelfLevel = mel.eval("$tmpVar=$gShelfTopLevel")
 icon = iconsFolder + '/CustomToolsIcon.png'
-command = "import os\nimport sys\nuser = os.environ.get('USER')\npath = 'C:/Users/' + user + '/Documents/maya/JM_Custom_Maya_Tools/Scripts'\nif path not in sys.path:\n    sys.path.append(path)\nimport InitilizeTools\nInitilizeTools.CustomToolsJM()"
+command = "import os\nimport sys\nuser = os.environ.get('USER')\nscriptsFolder = cmds.optionVar(q = 'JMDirectory') + '/Scripts'\nif scriptsFolder not in sys.path:\n    sys.path.append(scriptsFolder)\nimport InitilizeTools\nInitilizeTools.CustomToolsJM()"
 shelf = cmds.tabLayout(shelfLevel, query=1, ca=1, selectTab = True)
 
 cmds.shelfButton(p = shelf, image1 = icon, command = command)

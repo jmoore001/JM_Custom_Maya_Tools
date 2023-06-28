@@ -5,10 +5,10 @@ import random
 import string
 import os
 import sys
-user = os.environ.get('USER')
-path = 'C:/Users/' + user + '/Documents/maya/JM_Custom_Maya_Tools/Scripts'
-if path not in sys.path:
-    sys.path.append(path)
+scriptsFolder = cmds.optionVar(q = "JMDirectory") + "/Scripts"
+
+if scriptsFolder not in sys.path:
+    sys.path.append(scriptsFolder)
 import Edits
 Edits.Edits()
 class KitbashUI(object):
@@ -296,6 +296,7 @@ class KitbashUI(object):
 
         searchbar = cmds.textField(tcc = sendtosearch)
         addtokitbashbutton = cmds.button(l = 'Add to Library.', aop = True, c = setdirwarning)
+        print(self.directq)
         if self.directq != 0 and self.directq != 'Set Directory' and self.directq != '0':
 
 
