@@ -1,6 +1,5 @@
 from distutils import filelist
 import maya.cmds as cmds
-import pymel.core as pm
 import maya.mel as mel
 import os.path
 

@@ -1,5 +1,4 @@
 import maya.cmds as cmds
-import pymel.core as pm
 import os
 import sys
 scriptsFolder = cmds.optionVar(q = "JMDirectory") + "/Scripts"
