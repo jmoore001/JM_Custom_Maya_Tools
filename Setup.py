@@ -1,6 +1,7 @@
 import maya.cmds as cmds
 import os
 import sys
+import maya.mel as mel
 usd = cmds.internalVar(usd=True)
 version = cmds.about(version=True)
 dirWithoutVersion = usd.replace(str(version)+ "/", "")
