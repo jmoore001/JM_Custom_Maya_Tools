@@ -1,7 +1,7 @@
 import maya.cmds as cmds
 import os
 import sys
-import maya.mel as mel
+
 usd = cmds.internalVar(usd=True)
 version = cmds.about(version=True)
 dirWithoutVersion = usd.replace(str(version)+ "/", "")
@@ -14,6 +14,7 @@ if scriptsFolder not in sys.path:
     sys.path.append(scriptsFolder)
 import InitilizeTools
 import JMCustomMarkingMenu
+import Edits
 srcWindows = path + '/Scripts/userSetup.mel'
 destWindows = mayaDirectory + "/" +  version + '/scripts/userSetup.mel'
 print(destWindows)
@@ -27,11 +28,12 @@ else:
 
 iconsFolder = path + '/Icons'
 
-shelfLevel = mel.eval("$tmpVar=$gShelfTopLevel")
+
 icon = iconsFolder + '/CustomToolsIcon.png'
 command = "import os\nimport sys\nuser = os.environ.get('USER')\nscriptsFolder = cmds.optionVar(q = 'JMDirectory') + '/Scripts'\nif scriptsFolder not in sys.path:\n    sys.path.append(scriptsFolder)\nimport InitilizeTools\nInitilizeTools.CustomToolsJM()"
-shelf = cmds.tabLayout(shelfLevel, query=1, ca=1, selectTab = True)
 
-cmds.shelfButton(p = shelf, image1 = icon, command = command)
+
+
+Edits.Edits.AddButtonToShelf('JMTools', command, icon)
 JMCustomMarkingMenu.JMCustomToolsMarkingMenu()
 InitilizeTools.CustomToolsJM()

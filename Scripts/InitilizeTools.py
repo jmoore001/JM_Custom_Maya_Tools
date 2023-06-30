@@ -29,11 +29,7 @@ class CustomToolsJM(object):
         global iconsFolder
         command = "import os\nimport sys\nuser = os.environ.get('USER')\nscriptsFolder = cmds.optionVar(q = 'JMDirectory') + '/Scripts'\nif scriptsFolder not in sys.path:\n    sys.path.append(nscriptsFolder)\nimport {0}\n{1}".format(moduleName, call)
         icon = iconsFolder + '/' + moduleName + '.png'
-        shelfLevel = mel.eval("$tmpVar=$gShelfTopLevel")
-
-        shelf = cmds.tabLayout(shelfLevel, query=1, ca=1, selectTab = True)
-        
-        cmds.shelfButton(p = shelf, image1 = icon, command = command)
+        Edits.Edits.AddButtonToShelf(str(moduleName), command, icon)
 
 ##################################################################   
     global applysameUVs

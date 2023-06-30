@@ -1,6 +1,7 @@
 import maya.cmds as cmds
 import os
 import sys
+import maya.mel as mel
 class Edits():
 
     usd = cmds.internalVar(usd=True)
@@ -24,5 +25,32 @@ class Edits():
         srcWindows = path + '/userSetup.mel'
         cmds.sysFile( srcWindows, copy=destWindows )
         customToolsDirect = mayaDirectory + "/JM_Custom_Maya_Tools"
+
+
+
+    def AddButtonToShelf(name, command, icon):
+        shelfLevel = mel.eval("$tmpVar=$gShelfTopLevel")
+        current_shelf = cmds.tabLayout(shelfLevel, query=1, ca=1, selectTab = True)
+        
+        # Get the tools in the current shelf
+        shelf_tools = cmds.shelfLayout(current_shelf, q=True, ca=True)
+        
+        # Print the list of tools
+        
+        willCreate = True
+        for tool in shelf_tools:
+            tool_label = cmds.shelfButton(tool, q=True, label=True)
+            if(name ==tool_label):
+            
+                willCreate = False
+            
+
+        if(willCreate):
+        
+            cmds.shelfButton(p = current_shelf, image1 = icon, command = command, l = name)
+        
+        else:
+            cmds.warning(name + ' already exists on your shelf, this occurance is ignored')
+
 
 Edits()
