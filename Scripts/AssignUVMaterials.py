@@ -227,11 +227,30 @@ class ApplyUVsUI(object):
                     
                     return objectCoordList
                    
+                def DeleteUnusedStuff():
+                    cmds.refresh(force=True)
+                    materials = cmds.ls(materials=True)
+                    for mat in materials:
+                        type = cmds.nodeType(mat)
+                        if type == "StingrayPBS":
+                            shaderName = mat
                     
+                            globalDiffuseCube = shaderName + '.TEX_global_diffuse_cube'
+                            globalSpecularCube = shaderName + '.TEX_global_specular_cube'
+                            brdfLute = shaderName + '.TEX_brdf_lut'
+                            
+                            globalDiffuseConnect = cmds.listConnections(globalDiffuseCube, plugs=True)[0]
+                            globalSpecularConnect = cmds.listConnections(globalSpecularCube, plugs=True)[0]
+                            brdfLutConnect = cmds.listConnections(brdfLute, plugs=True)[0]
+                            
+                            cmds.disconnectAttr(globalDiffuseConnect, globalDiffuseCube)
+                            cmds.disconnectAttr(globalSpecularConnect, globalSpecularCube)
+                            cmds.disconnectAttr(brdfLutConnect, brdfLute)
+        
                 UVCoordList = makeObjectCoordList()
                 
                 CreateGroupNames(UVCoordList)
-                
+                DeleteUnusedStuff()
         
             
             def CloseWindow(*args):
