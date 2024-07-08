@@ -38,12 +38,15 @@ class Edits():
         # Print the list of tools
         
         willCreate = True
-        for tool in shelf_tools:
-            tool_label = cmds.shelfButton(tool, q=True, label=True)
-            if(name ==tool_label):
-            
-                willCreate = False
-            
+        if(shelf_tools != None):
+
+            for tool in shelf_tools:
+                if('separator' not in tool):
+                    tool_label = cmds.shelfButton(tool, q=True, label=True)
+                    if(name ==tool_label):
+                    
+                        willCreate = False
+                    
 
         if(willCreate):
         
