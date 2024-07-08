@@ -14,7 +14,7 @@ class CreateProject(object):
     def __init__(*args):
         windowSize = (400, 180)
         windowName = 'projectWindow'
-        windowTitle = 'Index Project Window'
+        windowTitle = 'JM Project Window'
         def CloseWindow(*args):
             if cmds.window(windowName, q = True, exists = True):
                 cmds.deleteUI(windowName, window = True)
@@ -95,7 +95,7 @@ class CreateProject(object):
         
         projWindow = cmds.window(windowName, t = windowTitle, widthHeight = windowSize, s = False)
         parentLayout = cmds.rowColumnLayout(adjustableColumn = True)
-        cmds.text('Create Index AR Project')
+        cmds.text('Create New Project Environment')
         cmds.separator(h = 10)
         directButton = cmds.button(l = 'Choose Directory',  c = ChooseDirectory)
         cmds.separator(h = 10)
