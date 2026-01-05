@@ -51,18 +51,31 @@ class CreateProject(object):
                 file_rule_dir = cmds.workspace(fileRuleEntry=file_rule)
                 maya_file_rule_dir = os.path.join( maya_dir, file_rule_dir)
                 create_folder( maya_file_rule_dir )
-            os.rmdir(projFolder + '/autosave')
-            os.rmdir(projFolder + '/clips')
-            
-            os.rmdir(projFolder + '/movies')
-            os.rmdir(projFolder + '/sceneAssembly')
-            os.rmdir(projFolder + '/scripts')
-            os.rmdir(projFolder + '/sound')
-            os.rmdir(projFolder + '/Time Editor/Clip Exports')
-            os.rmdir(projFolder + '/Time Editor')
-            
+                # folders you don't want
+                remove_these = [
+                    "autosave",
+                    "clips",
+                    "movies",
+                    "sceneAssembly",
+                    "scripts",
+                    "sound",
+                    os.path.join("Time Editor", "Clip Exports"),
+                    "Time Editor",
+                ]
 
-            
+                for rel in remove_these:
+                    p = os.path.join(projFolder, rel)
+                    # Only remove if it exists and is empty
+                    if os.path.isdir(p):
+                        try:
+                            os.rmdir(p)
+                        except OSError:
+                            # Not empty or locked — skip quietly
+                            pass
+
+                            
+
+                            
             
             
             

@@ -1,81 +1,65 @@
 import maya.cmds as cmds
-import os
-import sys
+import jm_path
 
-
-scriptsFolder = cmds.optionVar(q = "JMDirectory") + "/Scripts"
-
-if scriptsFolder not in sys.path:
-    sys.path.append(scriptsFolder)
+# Ensure our Scripts folder is on sys.path even if optionVars/path separators changed
+jm_path.ensure_sys_path()
 
 class JMCustomToolsMarkingMenu(object):
 
-    
     def __init__(self):
         self.RemoveOld()
         self.Build()
-        
-    def RemoveOld(self):
 
-        if cmds.popupMenu('JMCustomMarkingMenu', ex=True):
-
-            cmds.deleteUI('JMCustomMarkingMenu')
     def Build(self):
-        customMenu = cmds.popupMenu('JMCustomMarkingMenu', ctl = True, alt = True, mm = True, b = 3, pmo = True, pmc = self.BuildMarkingMenu, p = "viewPanes")
-    
+        self.BuildMarkingMenu('JM_Tools_MarkingMenu', parent='viewPanes')
+
+    def RemoveOld(self):
+        if cmds.popupMenu('JM_Tools_MarkingMenu', exists=True):
+            cmds.deleteUI('JM_Tools_MarkingMenu')
+
     def BuildMarkingMenu(self, menu, parent):
-
-
-        usd = cmds.internalVar(usd=True)
-        version = cmds.about(version=True)
-        dirWithoutVersion = usd.replace(str(version)+ "/", "")
-        mayaDirectory = dirWithoutVersion.replace("/scripts/", "")
-        path = mayaDirectory + "/JM_Custom_Maya_Tools"
-        scriptsFolder = path + '/Scripts'
-        var = cmds.optionVar(sv =("JMDirectory", path))
-
-        if scriptsFolder not in sys.path:
-            sys.path.append(scriptsFolder)
-        
-        iconFolder = mayaDirectory + "/JM_Custom_Maya_Tools/Icons"
+        iconFolder = jm_path.get_icons_dir()
 
         def LibraryCommand(*args):
             import KitbashUI
             KitbashUI.KitbashUI()
+
         def AssignUVMatCommand(*args):
             import AssignUVMaterials
             AssignUVMaterials.ApplyUVsUI()
-        def ApplyUVsCommand(*args):
+
+        def ApplySameUVCommand(*args):
             import applysameUVs
-            applysameUVs.ApplySameUVs()
+            applysameUVs.applysameUVsUI()
+
         def CurvesToPolyCommand(*args):
             import curvestopoly
-            curvestopoly.CurvesToPolygons()
-        def GroupUVsCommand(*args):
-            import GroupUV
-            GroupUV.GroupByUVs()
-        def LayoutUVsCommannd(*args):
+            curvestopoly.curvestopolyUI()
+
+        def LayoutUVsCommand(*args):
             import LayoutUVs
             LayoutUVs.LayoutUVs()
+
         def CreateProjectCommand(*args):
             import CreateProject
             CreateProject.CreateProject()
+
         def ToolKitCommand(*args):
             import InitilizeTools
             InitilizeTools.CustomToolsJM()
+
         def QCToolCommand(*args):
             import QCTool
             QCTool.QCUI()
-        
 
-        cmds.menuItem(p=menu, l="Library", rp="S", i=iconFolder + '/KitbashUI.png',c = LibraryCommand)
-        cmds.menuItem(p=menu, l="Assign Materials By UVs", rp="W", i=iconFolder + '/AssignUVMaterials.png',c = AssignUVMatCommand)
-        cmds.menuItem(p=menu, l="Apply Same UVs", rp="E", i=iconFolder + '/applysameUVs.png',c = ApplyUVsCommand)
-        cmds.menuItem(p=menu, l="Curves To Geometry", rp="SE", i=iconFolder + '/curvestopoly.png',c = CurvesToPolyCommand)
-        cmds.menuItem(p=menu, l="Group By UVs", rp="SW", i=iconFolder + '/GroupUV.png',c = GroupUVsCommand)
-        cmds.menuItem(p=menu, l="Layout UVs", rp="NW", i=iconFolder + '/LayoutUVs.png',c = LayoutUVsCommannd)
-        cmds.menuItem(p=menu, l="Create Project", rp="NE", i=iconFolder + '/CreateProject.png',c = CreateProjectCommand)
-        cmds.menuItem(p=menu, l="Tool Kit", rp="N", i=iconFolder + '/CustomToolsIcon.png',c = ToolKitCommand)
-        cmds.menuItem(p=menu, l="Quality Control", i=iconFolder + '/QCTool.png',c = QCToolCommand)
-    
-JMCustomToolsMarkingMenu()
+        # Build popup menu
+        cmds.popupMenu(menu, parent=parent, button=3, ctl=True, alt=True, mm=True)
+
+        cmds.menuItem(p=menu, l="Library", rp="S", i=iconFolder + '/KitbashUI.png', c=LibraryCommand)
+        cmds.menuItem(p=menu, l="Assign Materials By UVs", rp="W", i=iconFolder + '/AssignUVMaterials.png', c=AssignUVMatCommand)
+        cmds.menuItem(p=menu, l="Apply Same UVs", rp="E", i=iconFolder + '/applysameUVs.png', c=ApplySameUVCommand)
+        cmds.menuItem(p=menu, l="Curves To Poly", rp="N", i=iconFolder + '/curvestopoly.png', c=CurvesToPolyCommand)
+        cmds.menuItem(p=menu, l="Layout UVs", rp="NE", i=iconFolder + '/LayoutUVs.png', c=LayoutUVsCommand)
+        cmds.menuItem(p=menu, l="Create Project", rp="SE", i=iconFolder + '/CreateProject.png', c=CreateProjectCommand)
+        cmds.menuItem(p=menu, l="Tool Kit", rp="NW", i=iconFolder + '/CustomToolsIcon.png', c=ToolKitCommand)
+        cmds.menuItem(p=menu, l="QC Tool", rp="SW", i=iconFolder + '/QCTool.png', c=QCToolCommand)

@@ -1,59 +1,53 @@
-import maya.cmds as cmds
 import os
 import sys
+import maya.cmds as cmds
 import maya.mel as mel
-class Edits():
 
-    usd = cmds.internalVar(usd=True)
-    version = cmds.about(version=True)
-    dirWithoutVersion = usd.replace(str(version)+ "/", "")
-    mayaDirectory = dirWithoutVersion.replace("/scripts/", "")
-    path = mayaDirectory + "/JM_Custom_Maya_Tools"
-    scriptsFolder = path + '/Scripts'
+import jm_path
 
-    if scriptsFolder not in sys.path:
-        sys.path.append(scriptsFolder)
+class Edits:
+    """Small Maya UI / shelf helpers.
 
-    import JMCustomMarkingMenu
-    JMCustomMarkingMenu.JMCustomToolsMarkingMenu()
-    
-    
-    destWindows = mayaDirectory + version + '/scripts/userSetup.mel'
-    if os.path.exists(destWindows):
-        cmds.warning("userSetup.mel alread exists, this is being skipped, you will need to make sure that " + destWindows + " contains the the lines of code inside of " + srcWindows)
-    else:
-        srcWindows = path + '/userSetup.mel'
-        cmds.sysFile( srcWindows, copy=destWindows )
-        customToolsDirect = mayaDirectory + "/JM_Custom_Maya_Tools"
+    NOTE: Keeping the original class name + method signatures for backward compatibility.
+    """
 
+    @staticmethod
+    def _ensure_paths():
+        jm_path.ensure_sys_path()
 
+    @staticmethod
+    def GetCurrentShelf():
+        """Return the name of the currently selected shelf tab."""
+        try:
+            return mel.eval('$tmp = $gShelfTopLevel')
+        except Exception:
+            return None
 
-    def AddButtonToShelf(name, command, icon):
-        shelfLevel = mel.eval("$tmpVar=$gShelfTopLevel")
-        current_shelf = cmds.tabLayout(shelfLevel, query=1, ca=1, selectTab = True)
-        
-        # Get the tools in the current shelf
-        shelf_tools = cmds.shelfLayout(current_shelf, q=True, ca=True)
-        
-        # Print the list of tools
-        
-        willCreate = True
-        if(shelf_tools != None):
+    @staticmethod
+    def AddButtonToShelf(name, command, icon, shelf=None):
+        """Create a shelf button if it doesn't already exist."""
+        Edits._ensure_paths()
 
-            for tool in shelf_tools:
-                if('separator' not in tool):
+        current_shelf = shelf or Edits.GetCurrentShelf()
+        if not current_shelf:
+            cmds.warning("Could not determine current shelf.")
+            return
+
+        will_create = True
+        try:
+            existing = cmds.shelfLayout(current_shelf, q=True, ca=True) or []
+            for tool in existing:
+                try:
                     tool_label = cmds.shelfButton(tool, q=True, label=True)
-                    if(name ==tool_label):
-                    
-                        willCreate = False
-                    
+                    if name == tool_label:
+                        will_create = False
+                        break
+                except Exception:
+                    continue
+        except Exception:
+            existing = []
 
-        if(willCreate):
-        
-            cmds.shelfButton(p = current_shelf, image1 = icon, command = command, l = name)
-        
+        if will_create:
+            cmds.shelfButton(p=current_shelf, image1=icon, command=command, l=name)
         else:
-            cmds.warning(name + ' already exists on your shelf, this occurance is ignored')
-
-
-Edits()
+            cmds.warning(f"{name} already exists on your shelf, this occurrence is ignored")
