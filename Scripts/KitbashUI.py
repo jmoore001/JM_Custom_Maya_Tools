@@ -281,7 +281,7 @@ class KitbashUI(object):
 
 
 
-                        objectbutton = cmds.iconTextButton(label, p = triLayout, bgc = [0.25, 0.3, 0.3], st = 'iconAndTextCentered', i = buttonimage, l = label, c = partial(addtoscene, importobject, label))
+                        objectbutton = cmds.iconTextButton(label, p = triLayout, bgc = [0.25, 0.3, 0.3], st = 'iconAndTextVertical', i = buttonimage, l = label, c = partial(addtoscene, importobject, label))
 
                         objbuttons.append(objectbutton)
 
